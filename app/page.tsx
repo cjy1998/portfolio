@@ -1,5 +1,6 @@
 import InfoCard from "@/components/InfoCard";
 import ProjectCard from "@/components/ProjectCard";
+import TechnologyStack from "@/components/TechnologyStack";
 import { Typewriter } from "@/components/Typewriter";
 
 export default function Home() {
@@ -13,6 +14,9 @@ export default function Home() {
             className="text-2xl font-bold md:text-4xl bg-gradient-to-r from-orange-300 to-orange-500 bg-clip-text text-transparent dark:from-lime-300 dark:to-lime-500"
           />
           <span>My name is ChenJianYan</span>
+          <div className="w-full md:w-1/2 p-5">
+            <TechnologyStack />
+          </div>
         </div>
         <div className="hidden md:flex">
           <InfoCard />
