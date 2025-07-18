@@ -1,6 +1,6 @@
 import InfoCard from "@/components/InfoCard";
+import ProjectCard from "@/components/ProjectCard";
 import { Typewriter } from "@/components/Typewriter";
-import { MapPinCheckInside } from "lucide-react";
 
 export default function Home() {
   return (
@@ -21,6 +21,17 @@ export default function Home() {
           <MapPinCheckInside />
           杭州
         </span> */}
+      </div>
+      <div className="w-full h-0.5 bg-gray-300 my-10"></div>
+      <div className="w-full grid grid-cols-2 gap-5">
+        <ProjectCard
+          name="QuickMind AI"
+          coverImg="/quickmind.png"
+          description="QuickMind AI是一个专门为工业设计领域打造的设计平台，它提供了灵感库、设计台、智能助手等模块，帮助用户快速实现符合需求的设计图或设计方案。"
+          isOpen={true}
+          isLink={false}
+          link="https://www.baidu.com"
+        />
       </div>
     </div>
   );
