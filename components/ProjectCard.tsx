@@ -22,7 +22,7 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = (props) => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full hover:scale-102 transition-all duration-300 ">
       <Card>
         <CardHeader>
           <CardTitle>{props.name}</CardTitle>
@@ -41,7 +41,13 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <Image src={props.coverImg} width={500} height={500} alt="项目封面" />
+          <Image
+            src={props.coverImg}
+            width={500}
+            height={500}
+            alt="项目封面"
+            className="hover:scale-102 transition-all duration-300"
+          />
         </CardContent>
       </Card>
     </div>

@@ -9,8 +9,8 @@ export const TopMenus = () => {
       <div className="flex items-center justify-between max-w-3xl px-3 mx-auto xl:max-w-5xl xl:px-0">
         <div>
           <Avatar className="cursor-pointer">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src="/avator.jpg" />
+            <AvatarFallback>CJY</AvatarFallback>
           </Avatar>
         </div>
         <div className="flex items-center gap-0.5 sm:gap-2 ">
