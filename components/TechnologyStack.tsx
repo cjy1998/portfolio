@@ -81,10 +81,14 @@ const TechnologyStack = () => {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className="w-full h-full grid grid-cols-4 gap-4"
+      className="w-full h-full grid md:grid-cols-2 grid-cols-4 gap-2"
     >
       {images.map((src, index) => (
-        <div key={index} ref={setSvgRef(index)}>
+        <div
+          key={index}
+          ref={setSvgRef(index)}
+          className="flex md:justify-start justify-center"
+        >
           <Image src={src} height={32} width={32} alt="技术栈" />
         </div>
       ))}

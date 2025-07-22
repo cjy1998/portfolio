@@ -2,7 +2,7 @@ import InfoCard from "@/components/InfoCard";
 import ProjectCard from "@/components/ProjectCard";
 import TechnologyStack from "@/components/TechnologyStack";
 import { Typewriter } from "@/components/Typewriter";
-
+import GitHubCalendar from "react-github-calendar";
 export default function Home() {
   return (
     <div className="mt-8 max-w-3xl px-3 pb-10 mx-auto xl:max-w-5xl xl:px-0">
@@ -77,10 +77,6 @@ export default function Home() {
             </em>
             以了解更多我的实践成果。
           </p>
-
-          <div className="w-full md:w-1/2 p-5">
-            <TechnologyStack />
-          </div>
         </div>
         <div className="hidden md:flex w-2/5 h-full">
           <InfoCard />
@@ -90,6 +86,15 @@ export default function Home() {
           杭州
         </span> */}
       </div>
+      <div className="w-full flex flex-wrap md:justify-center justify-between  my-5">
+        <div className="w-full md:w-1/4 md:px-2 py-2 ">
+          <TechnologyStack />
+        </div>
+        <div className="w-full md:w-3/4 md:px-2 py-2">
+          <GitHubCalendar username="cjy1998" />
+        </div>
+      </div>
+
       <div className="w-full h-0.5 bg-gray-300 my-5 dark:bg-gray-700"></div>
       <span className="text-xl font-bold text-gray-600 dark:text-gray-200">
         公司项目
