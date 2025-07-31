@@ -20,7 +20,7 @@ export TAG=${TAG}
 export ACR_REGISTRY=${ACR_REGISTRY}
 export ACR_NAMESPACE=${ACR_NAMESPACE}
 
-docker compose -f /app/deploy/deploy/cjyportfolio/docker-compose.yml up -d --force-recreate
+docker compose -f /app/deploy/cjyportfolio/deploy/docker-compose.yml up -d --force-recreate
 
 # 清理旧镜像（保留最近的3个版本）
 echo "=== 清理旧镜像 ==="
