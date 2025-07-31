@@ -1,0 +1,83 @@
+name: Deploy to liyun
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1.检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # 2.配置镜像加速器
+      - name: Setup Docker mirror
+        run: |
+          echo '{
+            "registry-mirrors": ["https://dockerproxy.net"]
+          }' | sudo tee /etc/docker/daemon.json
+          sudo systemctl restart docker || true
+      # 3.登录阿里云容器镜像服务
+      - name: Login to Aliyun ACR
+        uses: aliyun/acr-login@v1.0.6
+        with:
+          login-server: ${{ secrets.ACR_REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      # 4.构建镜像
+      - name: Build Image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t ${{ secrets.ACR_REGISTRY }}/${{ secrets.ACR_NAMESPACE }}/cjyportfolio:$IMAGE_TAG .
+           docker push ${{ secrets.ACR_REGISTRY }}/${{ secrets.ACR_NAMESPACE }}/cjyportfolio:$IMAGE_TAG
+        # 5.测试 SSH 连接
+      - name: Test SSH Connection
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "SSH 连接成功！"
+            whoami
+            pwd
+        # 7.部署脚本
+      - name: Sync deployment scripts
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "scripts/*,deploy/docker-compose.yml" # 同步scripts目录,docker-compose
+          target: "/app/deploy/cjyportfolio/" # 目标位置
+        # 8. 通过 SSH 部署到 ECS
+      - name: Deploy to ECS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # 设置环境变量
+             export ACR_REGISTRY="${{ secrets.ACR_REGISTRY }}"
+             export ACR_NAMESPACE="${{ secrets.ACR_NAMESPACE }}"
+             # 确保脚本可执行
+             chmod +x /app/deploy/cjyportfolio/scripts/deploy.sh
+
+             # 添加调试信息
+             echo "当前目录: $(pwd)"
+             echo "脚本路径: /app/deploy/cjyportfolio/scripts/deploy.sh"
+             ls -la /app/deploy/cjyportfolio/scripts
+
+             # 执行部署脚本
+            /app/deploy/cjyportfolio/scripts/deploy.sh \
+             "${{ github.sha }}" \
+             "$ACR_REGISTRY" \
+             "$ACR_NAMESPACE" 
+
+             # 验证部署结果
+             docker ps -a
+             curl -I http://localhost:80
