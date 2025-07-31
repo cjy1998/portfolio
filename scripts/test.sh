@@ -27,4 +27,4 @@ echo "=== 清理旧镜像 ==="
 docker images --filter=reference="${ACR_REGISTRY}/${ACR_NAMESPACE}/cjyportfolio:*" --format "{{.ID}}" | tail -n +3 | xargs -r docker rmi -f || true
 
 
-echo "✅ 部署完成！"
+echo "✅ 测试部署完成！"
