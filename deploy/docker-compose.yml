@@ -1,0 +1,8 @@
+services:
+  portfolio:
+    image: next-app-pnpm
+    container_name: portfolio-container
+    ports:
+      - "3001:3001"
+    restart: always
+    command: ["node", "server.js"]
