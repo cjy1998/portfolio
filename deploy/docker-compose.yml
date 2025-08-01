@@ -1,7 +1,7 @@
 services:
   portfolio:
     image: ${ACR_REGISTRY}/${ACR_NAMESPACE}/cjyportfolio:$TAG
-    container_name: cjy-portfolio-container
+    container_name: portfolio-container
     ports:
       - "3001:3001"
     restart: always
