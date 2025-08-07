@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef } from "react";
-import domtoimage from "dom-to-image";
 import { snapdom } from "@zumer/snapdom";
 import {
   Dialog,
