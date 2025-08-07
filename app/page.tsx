@@ -6,7 +6,7 @@ import GitHubCalendar from "react-github-calendar";
 export default function Home() {
   return (
     <div className="mt-8 max-w-3xl px-3 pb-10 mx-auto xl:max-w-5xl xl:px-0">
-      <div className="w-full flex  gap-5 justify-between ">
+      <div id="about" className="w-full flex  gap-5 justify-between ">
         <div className="flex flex-col md:w-3/5 w-full">
           <Typewriter
             text={["Hello, Welcome to my space!"]}

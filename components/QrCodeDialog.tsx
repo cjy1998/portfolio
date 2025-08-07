@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import domtoimage from "dom-to-image";
-
+import { snapdom } from "@zumer/snapdom";
 import {
   Dialog,
   DialogContent,
@@ -20,13 +20,17 @@ const QrCodeDialog = ({
   onOpenChange: (open: boolean) => void;
 }) => {
   const shareCardRef = useRef<HTMLDivElement>(null);
-  const download = () => {
-    domtoimage.toJpeg(shareCardRef.current as HTMLElement).then((dataUrl) => {
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "share-card.jpeg";
-      link.click();
-    });
+  const download = async () => {
+    try {
+      if (!shareCardRef.current) {
+        return;
+      }
+      const result = await snapdom(shareCardRef.current, { scale: 2 });
+      // 使用内置的download方法
+      await result.download({ format: "png", filename: "share-card" });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -34,7 +38,7 @@ const QrCodeDialog = ({
         {/* <DialogTrigger asChild>
           <Button variant="outline">Open Dialog</Button>
         </DialogTrigger> */}
-        <DialogContent className="sm:max-w-[525px]">
+        <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>分享卡片</DialogTitle>
             {/* <DialogDescription>创建个人资料卡片，一键分享</DialogDescription> */}

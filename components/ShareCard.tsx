@@ -21,17 +21,19 @@ const ShareCard = forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <div
       ref={ref}
-      className="flex flex-col items-center  bg-white gap-2 w-[500px] p-6  rounded-2xl border  shadow-lg"
+      className="flex flex-col items-center  bg-white gap-2 w-[500px] p-6   border  shadow-lg"
     >
       {/* 顶部头像 和 用户名 座右铭 */}
       <div className="flex items-center gap-3">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col  gap-2">
           <Avatar className="w-[96px] h-[96px]">
             <AvatarImage src="/avator.jpg" />
           </Avatar>
           <div className="flex gap-2">
             {initData.username && (
-              <p className="text-[24px] font-bold">{initData.username}</p>
+              <p className="text-[20px] text-gray-500 font-bold">
+                {initData.username}
+              </p>
             )}
             {initData.address && (
               <p className="text-[14px] text-gray-600 self-end">
@@ -41,7 +43,7 @@ const ShareCard = forwardRef<HTMLDivElement>((props, ref) => {
           </div>
 
           {initData.motto && (
-            <em className="text-[16px] text-gray-600 ">{initData.motto}</em>
+            <em className="text-[14px] text-gray-600 ">{initData.motto}</em>
           )}
         </div>
         {/* 社交信息 */}
@@ -70,7 +72,7 @@ const ShareCard = forwardRef<HTMLDivElement>((props, ref) => {
 
         {/* 二维码 */}
         <div className="self-end">
-          <QRCodeCanvas value={"https://www.baidu.com/"} size={48} />
+          <QRCodeCanvas value={"http://cjy.deepthinkspace.cn/"} size={48} />
           {/* <QrCode /> */}
         </div>
       </div>
