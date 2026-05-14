@@ -18,7 +18,7 @@ export const TopMenus = () => {
             <Link href="#projects">Project</Link>
           </Button>
           <Button variant="ghost" className="cursor-pointer font-bold text-md">
-            <Link target="_blank" href="https://cjy1998.github.io/vitepress/">
+            <Link target="_blank" href="https://cjy.cc.cd">
               Blog
             </Link>
           </Button>
