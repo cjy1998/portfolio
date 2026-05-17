@@ -5,15 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const initData = {
-  //  姓名
-  username: "Cjy",
-  // 座右铭
-  motto: "不积跬步无以至千里，不积小流无以成江河",
-  // 地址
-  address: "杭州 . 中国",
-  // 邮箱
-  email: "1404340013@qq.com",
-  // github
+export const PROFILE = {
+  email: "cjy19980128@gmail.com",
   github: "https://github.com/cjy1998",
 };

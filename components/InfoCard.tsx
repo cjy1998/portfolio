@@ -2,9 +2,14 @@
 import React, { useState, useRef, MouseEvent } from "react";
 import Image from "next/image";
 import { MapPinCheckInside, Mail, Github, QrCode } from "lucide-react";
+import { useTranslations } from "next-intl";
 import QrCodeDialog from "./QrCodeDialog";
-import { initData } from "@/lib/utils";
+import { PROFILE } from "@/lib/utils";
 const InfoCard = () => {
+  const $t = useTranslations("InfoCard");
+  const username = $t("name");
+  const motto = $t("motto");
+  const address = $t("address");
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
@@ -61,31 +66,29 @@ const InfoCard = () => {
       />
       <div className="p-4 flex flex-col gap-3">
         <span className="text-xl font-semibold text-gray-800 dark:text-white">
-          {initData.username}
+          {username}
         </span>
-        {initData.motto && (
-          <span className="text-gray-700 dark:text-gray-400">
-            {initData.motto}
-          </span>
+        {motto && (
+          <span className="text-gray-700 dark:text-gray-400">{motto}</span>
         )}
 
         <div>
-          {initData.address && (
+          {address && (
             <span className="flex gap-1 py-2 text-gray-700 dark:text-gray-200">
               <MapPinCheckInside />
-              {initData.address}
+              {address}
             </span>
           )}
-          {initData.email && (
+          {PROFILE.email && (
             <span className="flex gap-1  py-2 text-gray-700 dark:text-gray-200">
               <Mail />
-              {initData.email}
+              {PROFILE.email}
             </span>
           )}
-          {initData.github && (
+          {PROFILE.github && (
             <span className="flex gap-1  py-2 text-gray-700 dark:text-gray-200">
               <Github />
-              {initData.github}
+              {PROFILE.github}
             </span>
           )}
         </div>

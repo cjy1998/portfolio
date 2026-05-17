@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { Avatar, AvatarImage } from "./ui/avatar";
-import { initData } from "@/lib/utils";
+import { PROFILE } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import { Mail, Github } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
 import { forwardRef } from "react";
@@ -17,6 +19,10 @@ const images = [
   "/svg/nestjs.svg",
 ];
 const ShareCard = forwardRef<HTMLDivElement>((props, ref) => {
+  const $t = useTranslations("InfoCard");
+  const username = $t("name");
+  const motto = $t("motto");
+  const address = $t("address");
   // bg-white/30 backdrop-blur-lg border-white/40
   return (
     <div
@@ -30,34 +36,30 @@ const ShareCard = forwardRef<HTMLDivElement>((props, ref) => {
             <AvatarImage src="/avator.jpg" />
           </Avatar>
           <div className="flex gap-2">
-            {initData.username && (
-              <p className="text-[20px] text-gray-500 font-bold">
-                {initData.username}
-              </p>
+            {username && (
+              <p className="text-[20px] text-gray-500 font-bold">{username}</p>
             )}
-            {initData.address && (
-              <p className="text-[14px] text-gray-600 self-end">
-                {initData.address}
-              </p>
+            {address && (
+              <p className="text-[14px] text-gray-600 self-end">{address}</p>
             )}
           </div>
 
-          {initData.motto && (
-            <em className="text-[14px] text-gray-600 ">{initData.motto}</em>
+          {motto && (
+            <em className="text-[14px] text-gray-600 ">{motto}</em>
           )}
         </div>
         {/* 社交信息 */}
         <div className="flex flex-col  gap-3  py-1 text-gray-600 text-[16px]">
-          {initData.email && (
+          {PROFILE.email && (
             <span className="flex gap-1 ">
               <Mail />
-              {initData.email}
+              {PROFILE.email}
             </span>
           )}
-          {initData.github && (
+          {PROFILE.github && (
             <span className="flex gap-1  ">
               <Github />
-              {initData.github}
+              {PROFILE.github}
             </span>
           )}
           {/* 技术栈 */}

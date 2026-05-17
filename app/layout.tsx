@@ -3,6 +3,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TopMenus } from "@/components/TopMenus";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "@/i18n/locale";
+
+const HTML_LANG: Record<string, string> = {
+  cn: "zh-CN",
+  en: "en",
+};
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -18,25 +25,28 @@ export const metadata: Metadata = {
   description: "blog、Portfolio",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   return (
-    <html lang="en">
+    <html lang={HTML_LANG[locale] ?? "en"} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <TopMenus></TopMenus>
-          {children}
-        </ThemeProvider>
+        <NextIntlClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TopMenus></TopMenus>
+            {children}
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

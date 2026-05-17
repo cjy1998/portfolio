@@ -1,0 +1,65 @@
+{
+    "TopMenus": {
+        "project": "Project",
+        "blog": "Blog",
+        "about": "About",
+        "contact": "Contact"
+    },
+    "InfoCard": {
+        "name": "Chen Jianyan",
+        "motto": "Rome wasn't built in a day",
+        "address": "Hangzhou . China"
+    },
+    "About": {
+        "headline": "Frontend Engineer (4 yrs) | Full-Stack Explorer | AI-Driven Developer (Vibe Coding)",
+        "intro": "Focused on building modern web applications that are performant, reliable, and visually polished. Beyond solid full-stack architecture skills (TypeScript / Next.js / NestJS), I'm a deep practitioner of Vibe Coding — leveraging large language models and custom AI Agents to reshape development workflows, and tackling complex engineering and product problems from an \"AI + full-stack\" perspective.",
+        "competenciesTitle": "Core Competencies",
+        "competencies": {
+            "ai": {
+                "label": "🤖 AI Empowerment & Vibe Coding: ",
+                "text": "Hands-on with Claude Code, Cursor, CodeX, Qoder and other AI tooling, combining MCP, Skills, Rules, Plugins and Scripts to build dedicated AI Agents. Seamlessly integrating AI into daily coding, refactoring and automated testing to deliver order-of-magnitude productivity gains."
+            },
+            "fullstack": {
+                "label": "🏗️ Modern Full-Stack Architecture: ",
+                "text": "Strong emphasis on code robustness (proficient in TypeScript). Fluent in the Vue.js and React ecosystems on the frontend, leveraging Next.js for SSR/SSG; on the backend, building server logic with NestJS or HonoJs. Capable of end-to-end product breakdown, architecture and delivery."
+            },
+            "graphics": {
+                "label": "🌌 3D Rendering & Advanced Interaction: ",
+                "text": "Deep hands-on experience with WebGL and the Canvas API, using Three.js (together with 2D tools like Fabric.js) for complex 3D texture mapping, shader development and scene visualization — bringing creative interactions and commercial value to products."
+            },
+            "engineering": {
+                "label": "⚙️ Engineering & Operations: ",
+                "text": "Comfortable with modern build tools like Vite and Webpack. Beyond the frontend, familiar with Docker, Nginx, Cloudflare and deployment/operations on Alibaba Cloud."
+            }
+        },
+        "selfDrivenTitle": "Self-Driven",
+        "selfDriven": {
+            "explorer": {
+                "label": "Tech Trailblazer: ",
+                "text": "Insatiable curiosity for emerging technologies — no boundaries."
+            },
+            "pragmatic": {
+                "label": "Pragmatic Problem Solver: ",
+                "text": "Skilled at analyzing requirements, breaking down complex problems and finding innovative yet practical solutions."
+            }
+        },
+        "outro": "Feel free to browse my <link>project portfolio</link> to learn more about what I've shipped."
+    },
+    "CompanyProject": {
+        "title": "Company Project",
+        "projects": {
+            "quickmind": {
+                "name": "QuickMind AI",
+                "description": "QuickMind AI is a design platform specifically for the industrial design field, providing modules like inspiration library, design station, and intelligent assistant to help users quickly implement design drawings or design solutions that meet their needs."
+            },
+            "zhiyang110": {
+                "name": "Ziyang Neighbor 110",
+                "description": "Based on the successful experience of the Neighbor Duty Room, we innovatively create the Ziyang Neighbor 110 Social Governance and Service Platform, integrating resources from government departments, social organizations, and units to timely respond to and solve the urgent needs of residents, proactively addressing and resolving community issues, and delivering services to neighbors."
+            },
+            "boyu": {
+                "name": "Boyu Cloud Parent App (WeChat Mini Program)",
+                "description": "Boyu Cloud Parent App is a tablet management platform based on WeChat Mini Program, allowing parents to set policies for tablets through the app to manage tablet usage and help parents keep track of their children's tablet use."
+            }
+        }
+    }
+}
