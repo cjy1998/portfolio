@@ -1,8 +1,17 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { streamText, convertToModelMessages, type UIMessage } from "ai";
 import { chatModel, AI_CONFIG } from "@/lib/ai/provider";
 import { retrieve, getAllKnowledgeAsText } from "@/lib/rag/retriever";
+import { rateLimit } from "@/lib/ai/ratelimit";
 import { LOCALE_COOKIE, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
+// 安全防护配置
+const MAX_INPUT_LENGTH = 1000; // 单条消息最大字符数
+const MAX_HISTORY_MESSAGES = 10; // 最多保留最近 N 条历史消息
+const ALLOWED_ORIGINS = (process.env.AI_ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 // 需要 Node.js runtime：使用 fs 读取 data/docs、cookies() 读取 locale
 export const runtime = "nodejs";
@@ -60,8 +69,56 @@ export async function POST(req: Request) {
     );
   }
 
+  // ===== 安全防护 1: Origin / Referer 校验，防止跨站滥用 =====
+  if (ALLOWED_ORIGINS.length > 0) {
+    const reqHeaders = await headers();
+    const origin = reqHeaders.get("origin") || "";
+    const referer = reqHeaders.get("referer") || "";
+    const isAllowed =
+      ALLOWED_ORIGINS.some(
+        (o) => origin === o || referer.startsWith(o)
+      );
+    if (!isAllowed) {
+      return new Response(
+        JSON.stringify({ error: "Forbidden origin" }),
+        { status: 403, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }
+
+  // ===== 安全防护 2: 基于 IP 的速率限制 =====
+  const reqHeaders = await headers();
+  const ip =
+    reqHeaders.get("x-forwarded-for")?.split(",")[0].trim() ||
+    reqHeaders.get("x-real-ip") ||
+    "unknown";
+  if (!rateLimit(`chat:${ip}`)) {
+    return new Response(
+      JSON.stringify({ error: "请求过于频繁，请稍后再试" }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "Retry-After": "60",
+        },
+      }
+    );
+  }
+
   const { messages } = (await req.json()) as { messages: UIMessage[] };
+
+  // ===== 安全防护 3: 输入长度限制 + 历史消息截断 =====
   const lastUserMessage = extractLastUserMessage(messages);
+  if (lastUserMessage.length > MAX_INPUT_LENGTH) {
+    return new Response(
+      JSON.stringify({
+        error: `单条消息不能超过 ${MAX_INPUT_LENGTH} 字符`,
+      }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
+  // 只保留最近 N 条历史消息，防止注入超长上下文消耗 token
+  const trimmedMessages = messages.slice(-MAX_HISTORY_MESSAGES);
 
   // 读取 locale 决定回答语言
   const cookieStore = await cookies();
@@ -87,8 +144,8 @@ export async function POST(req: Request) {
   const template = locale === "en" ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT_CN;
   const systemPrompt = template.replace("{context}", context || "（暂无相关资料）");
 
-  // 转换 UIMessage → CoreMessage 供 streamText 使用
-  const coreMessages = await convertToModelMessages(messages);
+  // 转换 UIMessage → CoreMessage 供 streamText 使用（使用截断后的历史）
+  const coreMessages = await convertToModelMessages(trimmedMessages);
 
   // 流式生成
   const result = streamText({
