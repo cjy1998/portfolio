@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TopMenus } from "@/components/TopMenus";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import AiAssistant from "@/components/ai";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "@/i18n/locale";
 
@@ -45,6 +46,7 @@ export default async function RootLayout({
           >
             <TopMenus></TopMenus>
             {children}
+            <AiAssistant />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -61,5 +61,15 @@
                 "description": "Boyu Cloud Parent App is a tablet management platform based on WeChat Mini Program, allowing parents to set policies for tablets through the app to manage tablet usage and help parents keep track of their children's tablet use."
             }
         }
+    },
+    "AIAssistant": {
+        "title": "AI Assistant",
+        "status": "Online",
+        "welcome": "Hi! I'm Chen Jianyan's AI assistant. I can answer questions about the site owner's profile, skills, and projects. What would you like to know?",
+        "placeholder": "Type your question...",
+        "suggestion1": "Tell me about yourself",
+        "suggestion2": "What projects have you worked on?",
+        "suggestion3": "What's your tech stack?",
+        "error": "Something went wrong, please try again later"
     }
 }
